@@ -5,14 +5,17 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class TicTacToeBoard extends UiComponent {
+public final class TicTacToeBoard extends UiComponent
+{
     private char[][] boardPieces;
 
-    public TicTacToeBoard() {
+    public TicTacToeBoard()
+    {
         this.boardPieces = new char[3][3];
     }
 
-    private void renderGrid(float lineSize) {
+    private void renderGrid(float lineSize)
+    {
         GL11.glColor3f(0.0f, 1.0f, 1.0f);
 
         final float halfLineSize = lineSize / 2.0f;
@@ -34,31 +37,40 @@ public final class TicTacToeBoard extends UiComponent {
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
     }
 
-    private void drawPieces() {
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
+    private void drawPieces()
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
 
             }
         }
     }
 
     @Override
-    public void render() {
+    public void render()
+    {
         renderGrid(10.0f);
         drawPieces();
     }
 
-    public boolean hasWon(char piece) {
+    public boolean hasWon(char piece)
+    {
         // Check columns
-        for (int i = 0; i < 3; i++) {
-            if (boardPieces[i][0] == piece && boardPieces[i][1] == piece && boardPieces[i][2] == piece) {
+        for (int i = 0; i < 3; i++)
+        {
+            if (boardPieces[i][0] == piece && boardPieces[i][1] == piece && boardPieces[i][2] == piece)
+            {
                 return true;
             }
         }
 
         // Check rows
-        for (int i = 0; i < 3; i++) {
-            if (boardPieces[0][i] == piece && boardPieces[1][i] == piece && boardPieces[2][i] == piece) {
+        for (int i = 0; i < 3; i++)
+        {
+            if (boardPieces[0][i] == piece && boardPieces[1][i] == piece && boardPieces[2][i] == piece)
+            {
                 return true;
             }
         }

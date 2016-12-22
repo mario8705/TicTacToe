@@ -8,48 +8,61 @@ import java.nio.ByteBuffer;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class Image extends UiComponent {
+public final class Image extends UiComponent
+{
     private int textureHandle;
-    private final int width, height;
+    private final int width;
+    private final int height;
 
-    private Image(int width, int height, int textureHandle) {
+    private Image(int width, int height, int textureHandle)
+    {
         this.width = width;
         this.height = height;
         this.textureHandle = textureHandle;
     }
 
-    public void destroy() {
-        if (GL11.glIsTexture(textureHandle)) {
+    public void destroy()
+    {
+        if (GL11.glIsTexture(textureHandle))
+        {
             GL11.glDeleteTextures(textureHandle);
             this.textureHandle = 0;
         }
     }
 
-    public int getWidth() {
+    public int getWidth()
+    {
         return width;
     }
 
-    public int getHeight() {
+    public int getHeight()
+    {
         return height;
     }
 
-    public int getTextureHandle() {
+    public int getTextureHandle()
+    {
         return textureHandle;
     }
 
-    public static Image loadImage(String filename) {
-        int[] width = { 0 }, height = { 0 }, bpp = { 0 };
+    public static Image loadImage(String filename)
+    {
+        int[] width = { 0 };
+        int[] height = { 0 };
+        int[] bpp = { 0 };
 
         ByteBuffer pixels = STBImage.stbi_load(filename, width, height, bpp, 0);
 
-        if (pixels == null) {
+        if (pixels == null)
+        {
             return null;
         }
 
         int internalFormat = (bpp[0] == 32) ? GL11.GL_RGBA : GL11.GL_RGB;
         int format;
 
-        switch (bpp[0]) {
+        switch (bpp[0])
+        {
             case 32:
                 format = GL11.GL_RGBA;
                 break;

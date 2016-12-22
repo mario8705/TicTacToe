@@ -11,7 +11,8 @@ import java.nio.ByteBuffer;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class ModePanel extends UiComponent {
+public final class ModePanel extends UiComponent
+{
     private float scale;
     private boolean hovered;
     private boolean clicked;
@@ -20,25 +21,32 @@ public final class ModePanel extends UiComponent {
     private Vector2f fontSize;
     private Runnable onClickCallback;
 
-    public ModePanel(String text) {
+    public ModePanel(String text)
+    {
         this.fontCache = BufferUtils.createByteBuffer(text.length() * 512);
         this.numQuads = STBEasyFont.stb_easy_font_print(0.0f, 0.0f, text, null, fontCache);
         this.fontSize = new Vector2f(STBEasyFont.stb_easy_font_width(text), STBEasyFont.stb_easy_font_height(text));
     }
 
     @Override
-    public void update(float tpf) {
-        if (!clicked) {
-            if (hovered) {
+    public void update(float tpf)
+    {
+        if (!clicked)
+        {
+            if (hovered)
+            {
                 this.scale = Math.min(scale + tpf * 0.5f, 0.05f);
-            } else {
+            }
+            else
+            {
                 this.scale = Math.max(scale - tpf * 0.5f, 0.0f);
             }
         }
     }
 
     @Override
-    public void render() {
+    public void render()
+    {
         super.render();
 
         GL11.glPushMatrix();
@@ -66,33 +74,40 @@ public final class ModePanel extends UiComponent {
     }
 
     @Override
-    public void onMouseButtonDown(float x, float y, int button) {
+    public void onMouseButtonDown(float x, float y, int button)
+    {
         this.clicked = true;
         this.scale = -0.05f;
     }
 
     @Override
-    public void onMouseButtonUp(float x, float y, int button) {
-        if (button == GLFW.GLFW_MOUSE_BUTTON_1) {
+    public void onMouseButtonUp(float x, float y, int button)
+    {
+        if (button == GLFW.GLFW_MOUSE_BUTTON_1)
+        {
             this.clicked = false;
 
-            if (hovered && onClickCallback != null) {
+            if (hovered && onClickCallback != null)
+            {
                 onClickCallback.run();
             }
         }
     }
 
     @Override
-    public void onMouseIn() {
+    public void onMouseIn()
+    {
         this.hovered = true;
     }
 
     @Override
-    public void onMouseOut() {
+    public void onMouseOut()
+    {
         this.hovered = false;
     }
 
-    public void setOnClickCallback(Runnable onClickCallback) {
+    public void setOnClickCallback(Runnable onClickCallback)
+    {
         this.onClickCallback = onClickCallback;
     }
 }

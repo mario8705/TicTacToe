@@ -13,7 +13,8 @@ import javax.swing.*;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class TicTacToe {
+public final class TicTacToe
+{
     private static TicTacToe instance = null;
     private volatile boolean isRunning;
     private DeviceWindow deviceWindow;
@@ -24,7 +25,8 @@ public final class TicTacToe {
     /**
      * Game's private constructor
      */
-    private TicTacToe() {
+    private TicTacToe()
+    {
         this.mousePosition = new Vector2f();
         System.out.println("Using LWJGL v" + Version.getVersion());
     }
@@ -32,7 +34,8 @@ public final class TicTacToe {
     /**
      * Initialize the game
      */
-    private void init() {
+    private void init()
+    {
         this.deviceWindow = new DeviceWindow(800, 600, "TicTacToe");
         setNextScreen(new MainMenuScreen());
 
@@ -41,17 +44,22 @@ public final class TicTacToe {
         GLFW.glfwSetMouseButtonCallback(deviceWindow.getWindowHandle(), this::mouseButtonCallback);
     }
 
-    private void cursorPosCallback(long window, double xpos, double ypos) {
-        if (currentScreen != null) {
+    private void cursorPosCallback(long window, double xpos, double ypos)
+    {
+        if (currentScreen != null)
+        {
             currentScreen.onMouseMove((float) xpos, (float) ypos);
         }
 
         mousePosition.set((float) xpos, (float) ypos);
     }
 
-    private void mouseButtonCallback(long windowID, int button, int action, int mods) {
-        if (currentScreen != null) {
-            switch (action) {
+    private void mouseButtonCallback(long windowID, int button, int action, int mods)
+    {
+        if (currentScreen != null)
+        {
+            switch (action)
+            {
                 case GLFW.GLFW_PRESS:
                     currentScreen.onMouseButtonDown(mousePosition.getX(), mousePosition.getY(), button);
                     break;
@@ -70,20 +78,25 @@ public final class TicTacToe {
      * Update the game's logic
      * @param tpf Time per frame : the duration of the last frame in seconds
      */
-    private void update(float tpf) {
-        if (nextScreen != currentScreen) {
-            if (currentScreen != null) {
+    private void update(float tpf)
+    {
+        if (nextScreen != currentScreen)
+        {
+            if (currentScreen != null)
+            {
                 currentScreen.destroy();
             }
 
             this.currentScreen = nextScreen;
 
-            if (currentScreen != null) {
+            if (currentScreen != null)
+            {
                 currentScreen.init();
             }
         }
 
-        if (currentScreen != null) {
+        if (currentScreen != null)
+        {
             currentScreen.getRootContainer().setSize(new Vector2f(deviceWindow.getWidth(), deviceWindow.getHeight()));
             currentScreen.update(tpf);
         }
@@ -92,7 +105,8 @@ public final class TicTacToe {
     /**
      * Render the game's graphics
      */
-    private void render() {
+    private void render()
+    {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
@@ -104,7 +118,8 @@ public final class TicTacToe {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glLoadIdentity();
 
-        if (currentScreen != null) {
+        if (currentScreen != null)
+        {
             currentScreen.render();
         }
     }
@@ -112,21 +127,24 @@ public final class TicTacToe {
     /**
      * Starts the game
      */
-    private void start() {
+    private void start()
+    {
         this.isRunning = true;
 
         init();
 
         long lastFrameTime = System.nanoTime();
 
-        while (isRunning) {
+        while (isRunning)
+        {
             long currentTime = System.nanoTime();
             float tpf = (currentTime - lastFrameTime) / 1000000000.0f;
             lastFrameTime = currentTime;
 
             deviceWindow.pollEvents();
 
-            if (deviceWindow.isCloseRequested()) {
+            if (deviceWindow.isCloseRequested())
+            {
                 isRunning = false;
             }
 
@@ -139,15 +157,18 @@ public final class TicTacToe {
         deviceWindow.destroy();
     }
 
-    public void setNextScreen(Screen nextScreen) {
+    public void setNextScreen(Screen nextScreen)
+    {
         this.nextScreen = nextScreen;
     }
 
-    public void shutdown() {
+    public void shutdown()
+    {
         this.isRunning = false;
     }
 
-    public static TicTacToe getInstance() {
+    public static TicTacToe getInstance()
+    {
         return instance;
     }
 
@@ -155,16 +176,22 @@ public final class TicTacToe {
      * Program's entry point
      * @param args Program's command line arguments (unused)
      */
-    public static void main(String[] args) {
-        try {
+    public static void main(String[] args)
+    {
+        try
+        {
             instance = new TicTacToe();
             instance.start();
-        } catch (Throwable throwable) {
-            try {
+        }
+        catch (Throwable throwable)
+        {
+            try
+            {
                 // Attempt to set the system's look and feel
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Throwable e) {
-                ;
+            }
+            catch (Throwable e)
+            {
             }
 
             throwable.printStackTrace();

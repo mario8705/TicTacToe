@@ -5,14 +5,16 @@ import fr.alexislavaud.tictactoe.main.TicTacToe;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class MainMenuScreen extends Screen {
+public final class MainMenuScreen extends Screen
+{
     private Image backgroundImage;
     private Label gameTitle;
     private Button playButton;
     private Button quitButton;
 
     @Override
-    public void update(float tpf) {
+    public void update(float tpf)
+    {
         super.update(tpf);
 
         gameTitle.centerX(rootContainer.getSize().getX());
@@ -26,7 +28,8 @@ public final class MainMenuScreen extends Screen {
     }
 
     @Override
-    public void init() {
+    public void init()
+    {
         this.gameTitle = new Label("TicTacToe", 4.0f);
         this.playButton = new Button("Play!");
         this.quitButton = new Button("Quit");
@@ -38,7 +41,7 @@ public final class MainMenuScreen extends Screen {
     }
 
     @Override
-    public void destroy() {
-
+    public void destroy()
+    {
     }
 }

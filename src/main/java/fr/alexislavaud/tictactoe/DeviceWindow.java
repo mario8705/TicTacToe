@@ -7,7 +7,8 @@ import org.lwjgl.system.MemoryUtil;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class DeviceWindow {
+public final class DeviceWindow
+{
     private long windowHandle;
     private int width, height;
 
@@ -17,11 +18,13 @@ public final class DeviceWindow {
      * @param height Window height
      * @param appTitle Window caption
      */
-    public DeviceWindow(int width, int height, String appTitle) {
+    public DeviceWindow(int width, int height, String appTitle)
+    {
         this.width = width;
         this.height = height;
 
-        if (!GLFW.glfwInit()) {
+        if (!GLFW.glfwInit())
+        {
             throw new UnrecoverableError("glfwInit() returned false");
         }
 
@@ -29,7 +32,8 @@ public final class DeviceWindow {
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_FALSE);
         this.windowHandle = GLFW.glfwCreateWindow(width, height, appTitle, MemoryUtil.NULL, MemoryUtil.NULL);
 
-        if (windowHandle == MemoryUtil.NULL) {
+        if (windowHandle == MemoryUtil.NULL)
+        {
             GLFW.glfwTerminate();
 
             throw new UnrecoverableError("glfwCreateWindow() failed");
@@ -44,22 +48,26 @@ public final class DeviceWindow {
     /**
      * Handles OS-related events (keyboard, mouse,  ...)
      */
-    public void pollEvents() {
+    public void pollEvents()
+    {
         GLFW.glfwPollEvents();
     }
 
     /**
      * Send the frame to the monitor
      */
-    public void presentFrame() {
+    public void presentFrame()
+    {
         GLFW.glfwSwapBuffers(windowHandle);
     }
 
     /**
      * Destroy the window and terminate glfw
      */
-    public void destroy() {
-        if (windowHandle != MemoryUtil.NULL) {
+    public void destroy()
+    {
+        if (windowHandle != MemoryUtil.NULL)
+        {
             GLFW.glfwDestroyWindow(windowHandle);
             GLFW.glfwTerminate();
 
@@ -71,7 +79,8 @@ public final class DeviceWindow {
      * Checks if the window has been closed
      * @return true if the user has closed the window
      */
-    public boolean isCloseRequested() {
+    public boolean isCloseRequested()
+    {
         return GLFW.glfwWindowShouldClose(windowHandle);
     }
 
@@ -79,7 +88,8 @@ public final class DeviceWindow {
      * Returns the window's width
      * @return The window's width
      */
-    public int getWidth() {
+    public int getWidth()
+    {
         return width;
     }
 
@@ -87,7 +97,8 @@ public final class DeviceWindow {
      * Returns the windows's height
      * @return The windows's height
      */
-    public int getHeight() {
+    public int getHeight()
+    {
         return height;
     }
 
@@ -95,7 +106,8 @@ public final class DeviceWindow {
      * Returns the GLFW window handle
      * @return The window handle
      */
-    public long getWindowHandle() {
+    public long getWindowHandle()
+    {
         return windowHandle;
     }
 }

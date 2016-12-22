@@ -11,7 +11,8 @@ import java.nio.ByteBuffer;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class Label extends UiComponent {
+public final class Label extends UiComponent
+{
     private String text;
     private float scale;
     private Color color;
@@ -20,15 +21,18 @@ public final class Label extends UiComponent {
     private int textQuads;
     private Vector2f fontSize;
 
-    public Label() {
+    public Label()
+    {
         this("", 1.0f);
     }
 
-    public Label(String text) {
+    public Label(String text)
+    {
         this(text, 1.0f);
     }
 
-    public Label(String text, float scale) {
+    public Label(String text, float scale)
+    {
         this.text = text;
         this.scale = scale;
         this.color = new Color(1.0f, 1.0f, 1.0f);
@@ -37,20 +41,22 @@ public final class Label extends UiComponent {
         fitSizeToFontSize();
     }
 
-    public void fitSizeToFontSize() {
+    public void fitSizeToFontSize()
+    {
         size.set(fontSize.getX() * scale, fontSize.getY() * scale);
     }
 
     @Override
-    public void update(float tpf) {
-
+    public void update(float tpf)
+    {
     }
 
     @Override
-    public void render() {
+    public void render()
+    {
         updateFontCache();
 
-        GL11.glColor4f(color.r, color.g, color.b, color.a);
+        GL11.glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
         GL11.glPushMatrix();
         GL11.glScalef(scale, scale, 0.0f);
@@ -65,8 +71,10 @@ public final class Label extends UiComponent {
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    private void updateFontCache() {
-        if (cachedText == null || !cachedText.equals(text)) {
+    private void updateFontCache()
+    {
+        if (cachedText == null || !cachedText.equals(text))
+        {
             fontCache = BufferUtils.createByteBuffer(text.length() * 512);
             textQuads = STBEasyFont.stb_easy_font_print(0.0f, 0.0f, text, null, fontCache);
 
@@ -76,36 +84,44 @@ public final class Label extends UiComponent {
         }
     }
 
-    private void recalculateFontSize() {
+    private void recalculateFontSize()
+    {
         fontSize.setX(STBEasyFont.stb_easy_font_width(text));
         fontSize.setY(STBEasyFont.stb_easy_font_height(text));
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(String text)
+    {
         this.text = text;
     }
 
-    public float getScale() {
+    public float getScale()
+    {
         return scale;
     }
 
-    public void setScale(float scale) {
+    public void setScale(float scale)
+    {
         this.scale = scale;
     }
 
-    public Color getColor() {
+    public Color getColor()
+    {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(Color color)
+    {
         this.color = color;
     }
 
-    public Vector2f getFontSize() {
+    public Vector2f getFontSize()
+    {
         return fontSize;
     }
 }

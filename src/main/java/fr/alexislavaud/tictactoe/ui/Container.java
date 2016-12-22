@@ -10,13 +10,15 @@ import java.util.List;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public class Container extends UiComponent {
+public class Container extends UiComponent
+{
     private List<UiComponent> childs;
     private UiComponent focusedComponent;
     private Vector2f previousMousePosition;
     private boolean[] mouseButtons;
 
-    public Container() {
+    public Container()
+    {
         this.childs = new ArrayList<>();
         this.focusedComponent = null;
         this.previousMousePosition = new Vector2f();
@@ -24,8 +26,10 @@ public class Container extends UiComponent {
     }
 
     @Override
-    public void update(float tpf) {
-        for (int i = 0; i < childs.size(); i++) {
+    public void update(float tpf)
+    {
+        for (int i = 0; i < childs.size(); i++)
+        {
             UiComponent component = childs.get(i);
 
             component.update(tpf);
@@ -33,8 +37,10 @@ public class Container extends UiComponent {
     }
 
     @Override
-    public void render() {
-        for (int i = 0; i < childs.size(); i++) {
+    public void render()
+    {
+        for (int i = 0; i < childs.size(); i++)
+        {
             UiComponent component = childs.get(i);
 
             GL11.glPushMatrix();
@@ -54,28 +60,36 @@ public class Container extends UiComponent {
         }
     }
 
-    public void addChild(UiComponent child) {
+    public void addChild(UiComponent child)
+    {
         childs.add(child);
         child.parent = this;
     }
 
-    public void addChilds(UiComponent... components) {
-        for (UiComponent component : components) {
+    public void addChilds(UiComponent... components)
+    {
+        for (UiComponent component : components)
+        {
             addChild(component);
         }
     }
 
-    public void removeChild(UiComponent child) {
-        if (childs.remove(child) && child.parent == this) {
+    public void removeChild(UiComponent child)
+    {
+        if (childs.remove(child) && child.parent == this)
+        {
             child.parent = null;
         }
     }
 
-    public UiComponent getComponentAt(float x, float y) {
-        for (int i = childs.size() - 1; i >= 0; i--) {
+    public UiComponent getComponentAt(float x, float y)
+    {
+        for (int i = childs.size() - 1; i >= 0; i--)
+        {
             UiComponent child = childs.get(i);
 
-            if (isMouseInComponent(x, y, child)) {
+            if (isMouseInComponent(x, y, child))
+            {
                 return child;
             }
         }
@@ -84,8 +98,10 @@ public class Container extends UiComponent {
     }
 
     @Override
-    public void onMouseMove(float x, float y) {
-        for (int i = childs.size() - 1; i >= 0; i--) {
+    public void onMouseMove(float x, float y)
+    {
+        for (int i = childs.size() - 1; i >= 0; i--)
+        {
             UiComponent component = childs.get(i);
 
             if (isMouseInComponent(x, y, component))
@@ -98,25 +114,30 @@ public class Container extends UiComponent {
         UiComponent previousHighlightedComponent = getComponentAt(previousMousePosition.getX(), previousMousePosition.getY());
         UiComponent currentHighlightedComponent = getComponentAt(x, y);
 
-        if (previousHighlightedComponent != null && previousHighlightedComponent != currentHighlightedComponent) {
+        if (previousHighlightedComponent != null && previousHighlightedComponent != currentHighlightedComponent)
+        {
             previousHighlightedComponent.onMouseOut();
         }
 
-        if (currentHighlightedComponent != null && currentHighlightedComponent != previousHighlightedComponent) {
+        if (currentHighlightedComponent != null && currentHighlightedComponent != previousHighlightedComponent)
+        {
             currentHighlightedComponent.onMouseIn();
         }
 
-        if (focusedComponent != null && isAnyMouseButtonDown()) {
+        if (focusedComponent != null && isAnyMouseButtonDown())
+        {
             focusedComponent.onMouseMove(x - focusedComponent.position.getX(), y - focusedComponent.position.getY());
         }
 
         previousMousePosition.set(x, y);
     }
 
-    private boolean isAnyMouseButtonDown() {
+    private boolean isAnyMouseButtonDown()
+    {
         boolean ret = false;
 
-        for (boolean mouseButton : mouseButtons) {
+        for (boolean mouseButton : mouseButtons)
+        {
             ret = ret || mouseButton;
         }
 
@@ -124,36 +145,42 @@ public class Container extends UiComponent {
     }
 
     @Override
-    public void onMouseButtonDown(float x, float y, int button) {
+    public void onMouseButtonDown(float x, float y, int button)
+    {
         UiComponent highlightedComponent = getComponentAt(x, y);
 
         mouseButtons[button] = true;
 
-        if (highlightedComponent != null) {
+        if (highlightedComponent != null)
+        {
             highlightedComponent.onMouseButtonDown(x - highlightedComponent.position.getY(), y - highlightedComponent.position.getY(), button);
             focusedComponent = highlightedComponent;
         }
-        else {
+        else
+        {
             focusedComponent = null;
         }
     }
 
     @Override
-    public void onMouseButtonUp(float x, float y, int button) {
+    public void onMouseButtonUp(float x, float y, int button)
+    {
         mouseButtons[button] = false;
 
-        if (focusedComponent != null) {
+        if (focusedComponent != null)
+        {
             focusedComponent.onMouseButtonUp(x - focusedComponent.position.getX(), y - focusedComponent.position.getY(), button);
         }
     }
 
-    private boolean isMouseInComponent(float x, float y, UiComponent component) {
+    private boolean isMouseInComponent(float x, float y, UiComponent component)
+    {
         Vector2f position = component.position;
         Vector2f size = component.getSize();
 
         if (x > position.getX() && x <= position.getX() + size.getX() &&
-                y > position.getY() && y <= position.getY() + size.getY()) {
-
+                y > position.getY() && y <= position.getY() + size.getY())
+        {
             return true;
         }
 
@@ -161,12 +188,12 @@ public class Container extends UiComponent {
     }
 
     @Override
-    public void onMouseIn() {
-
+    public void onMouseIn()
+    {
     }
 
     @Override
-    public void onMouseOut() {
-
+    public void onMouseOut()
+    {
     }
 }

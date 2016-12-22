@@ -5,18 +5,21 @@ import fr.alexislavaud.tictactoe.main.TicTacToe;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class SelectModeScreen extends Screen {
+public final class SelectModeScreen extends Screen
+{
     private Label selectModeLabel;
     private ModePanel aiModePanel;
     private ModePanel versusModePanel;
     private Button backButton;
 
-    public SelectModeScreen() {
+    public SelectModeScreen()
+    {
 
     }
 
     @Override
-    public void update(float tpf) {
+    public void update(float tpf)
+    {
         super.update(tpf);
 
         selectModeLabel.centerX(rootContainer.getSize().getX());
@@ -37,7 +40,8 @@ public final class SelectModeScreen extends Screen {
     }
 
     @Override
-    public void init() {
+    public void init()
+    {
         this.selectModeLabel = new Label("Select mode", 4.0f);
         this.aiModePanel = new ModePanel("With computer");
         this.versusModePanel = new ModePanel("With friend");
@@ -51,7 +55,7 @@ public final class SelectModeScreen extends Screen {
     }
 
     @Override
-    public void destroy() {
-
+    public void destroy()
+    {
     }
 }

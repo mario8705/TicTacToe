@@ -11,7 +11,8 @@ import java.nio.ByteBuffer;
 /**
  * Created by Alexis Lavaud on 22/12/2016.
  */
-public final class Button extends UiComponent {
+public final class Button extends UiComponent
+{
     private String text;
     private String cachedText;
     private ByteBuffer fontCache;
@@ -20,7 +21,8 @@ public final class Button extends UiComponent {
     private boolean buttonHovered, buttonDown;
     private Runnable buttonCallback;
 
-    public Button(String text) {
+    public Button(String text)
+    {
         this.text = text;
         this.position = new Vector2f(0.0f, 0.0f);
         this.size = new Vector2f(256.0f, 64.0f);
@@ -31,12 +33,14 @@ public final class Button extends UiComponent {
     }
 
     @Override
-    public void update(float tpf) {
+    public void update(float tpf)
+    {
 
     }
 
     @Override
-    public void render() {
+    public void render()
+    {
         int bottomMarginPx = buttonDown ? 2 : 5;
 
         GL11.glBegin(GL11.GL_QUADS);
@@ -71,8 +75,10 @@ public final class Button extends UiComponent {
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    private void updateFontCache() {
-        if (cachedText != text) {
+    private void updateFontCache()
+    {
+        if (cachedText != text)
+        {
             fontCache = BufferUtils.createByteBuffer(text.length() * 512);
             textQuads = STBEasyFont.stb_easy_font_print(0.0f, 0.0f, text, null, fontCache);
 
@@ -84,16 +90,20 @@ public final class Button extends UiComponent {
     }
 
     @Override
-    public void onMouseButtonDown(float x, float y, int button) {
+    public void onMouseButtonDown(float x, float y, int button)
+    {
         if (button == GLFW.GLFW_MOUSE_BUTTON_1) {
             buttonDown = true;
         }
     }
 
     @Override
-    public void onMouseButtonUp(float x, float y, int button) {
-        if (button == GLFW.GLFW_MOUSE_BUTTON_1) {
-            if (buttonHovered && buttonDown && buttonCallback != null) {
+    public void onMouseButtonUp(float x, float y, int button)
+    {
+        if (button == GLFW.GLFW_MOUSE_BUTTON_1)
+        {
+            if (buttonHovered && buttonDown && buttonCallback != null)
+            {
                 buttonCallback.run();
             }
 
@@ -102,16 +112,19 @@ public final class Button extends UiComponent {
     }
 
     @Override
-    public void onMouseIn() {
+    public void onMouseIn()
+    {
         this.buttonHovered = true;
     }
 
     @Override
-    public void onMouseOut() {
+    public void onMouseOut()
+    {
         this.buttonHovered = false;
     }
 
-    public void setButtonCallback(Runnable buttonCallback) {
+    public void setButtonCallback(Runnable buttonCallback)
+    {
         this.buttonCallback = buttonCallback;
     }
 }
