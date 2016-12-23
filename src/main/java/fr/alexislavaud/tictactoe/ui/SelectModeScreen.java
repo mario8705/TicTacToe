@@ -47,8 +47,8 @@ public final class SelectModeScreen extends Screen
         this.versusModePanel = new ModePanel("With friend");
         this.backButton = new Button("Back");
 
-        aiModePanel.setOnClickCallback(() -> TicTacToe.getInstance().setNextScreen(new TicTacToeScreen()));
-        versusModePanel.setOnClickCallback(() -> {});
+        aiModePanel.setOnClickCallback(() -> TicTacToe.getInstance().setNextScreen(new TicTacToeScreen(true)));
+        versusModePanel.setOnClickCallback(() -> TicTacToe.getInstance().setNextScreen(new TicTacToeScreen(false)));
         backButton.setButtonCallback(() -> TicTacToe.getInstance().setNextScreen(new MainMenuScreen()));
 
         rootContainer.addChilds(selectModeLabel, aiModePanel, versusModePanel, backButton);

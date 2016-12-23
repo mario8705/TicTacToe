@@ -10,20 +10,13 @@ import java.util.Arrays;
  */
 public final class TicTacToeBoard extends UiComponent
 {
+    private BoardCellChangeCallback boardCellChangeCallback;
     private char[][] boardCells;
 
     public TicTacToeBoard()
     {
         this.boardCells = new char[3][3];
-        emptyBoard();
-
-        // TODO DEBUG
-        boardCells[0][0] = 'O';
-        boardCells[1][0] = 'O';
-        boardCells[1][2] = 'O';
-        boardCells[1][1] = 'X';
-        boardCells[0][1] = 'X';
-        boardCells[0][1] = 'X';
+        clearBoard();
     }
 
     private void renderGrid(float lineSize)
@@ -51,14 +44,14 @@ public final class TicTacToeBoard extends UiComponent
 
     private void drawCells()
     {
+        final float sizeXover6 = getSize().getX() / 6.0f;
+        final float sizeYover6 = getSize().getY() / 6.0f;
+
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
                 char cell = boardCells[x][y];
-
-                final float sizeXover6 = getSize().getX() / 6.0f;
-                final float sizeYover6 = getSize().getY() / 6.0f;
 
                 final float xpos = x * 2.0f * sizeXover6 + sizeXover6;
                 final float ypos = y * 2.0f * sizeYover6 + sizeYover6;
@@ -157,7 +150,7 @@ public final class TicTacToeBoard extends UiComponent
         return count;
     }
 
-    private void emptyBoard()
+    public void clearBoard()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -176,14 +169,30 @@ public final class TicTacToeBoard extends UiComponent
 
         if (button == GLFW.GLFW_MOUSE_BUTTON_1)
         {
-            boardCells[cellX][cellY] = 'O';
-
-            if (hasWon('O'))
+            if (boardCellChangeCallback != null)
             {
-                System.out.println("Fuck off");
+                boardCellChangeCallback.onBoardCellChange(cellX, cellY);
             }
         }
+    }
 
-        // TODO to continue
+    public boolean isCellEmpty(int x, int y)
+    {
+        return boardCells[x][y] == ' ';
+    }
+
+    public void setBoardCellAt(int x, int y, char cell)
+    {
+        boardCells[x][y] = cell;
+    }
+
+    public void setBoardCellChangeCallback(BoardCellChangeCallback boardCellChangeCallback)
+    {
+        this.boardCellChangeCallback = boardCellChangeCallback;
+    }
+
+    public interface BoardCellChangeCallback
+    {
+        void onBoardCellChange(int cellX, int cellY);
     }
 }
