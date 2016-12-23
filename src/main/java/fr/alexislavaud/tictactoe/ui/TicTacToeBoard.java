@@ -1,6 +1,9 @@
 package fr.alexislavaud.tictactoe.ui;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
+
+import java.util.Arrays;
 
 /**
  * Created by Alexis Lavaud on 22/12/2016.
@@ -12,6 +15,7 @@ public final class TicTacToeBoard extends UiComponent
     public TicTacToeBoard()
     {
         this.boardCells = new char[3][3];
+        emptyBoard();
 
         // TODO DEBUG
         boardCells[0][0] = 'O';
@@ -122,6 +126,15 @@ public final class TicTacToeBoard extends UiComponent
         }
 
         // Check diagonals
+        if (boardCells[0][0] == piece && boardCells[1][1] == piece && boardCells[2][2] == piece)
+        {
+            return true;
+        }
+
+        if (boardCells[2][0] == piece && boardCells[1][1] == piece && boardCells[0][2] == piece)
+        {
+            return true;
+        }
 
         return false;
     }
@@ -144,14 +157,32 @@ public final class TicTacToeBoard extends UiComponent
         return count;
     }
 
+    private void emptyBoard()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Arrays.fill(boardCells[i], ' ');
+        }
+    }
+
     @Override
     public void onMouseButtonUp(float x, float y, int button)
     {
         int cellX = (int) (x / size.getX() * 3.0f);
         int cellY = (int) (y / size.getY() * 3.0f);
-        System.out.println(cellX + ", " + cellY);
 
-        boardCells[cellX][cellY] = 'O';
+        if (cellX < 0 || cellX > 2 || cellX < 0 || cellY > 2)
+            return;
+
+        if (button == GLFW.GLFW_MOUSE_BUTTON_1)
+        {
+            boardCells[cellX][cellY] = 'O';
+
+            if (hasWon('O'))
+            {
+                System.out.println("Fuck off");
+            }
+        }
 
         // TODO to continue
     }
