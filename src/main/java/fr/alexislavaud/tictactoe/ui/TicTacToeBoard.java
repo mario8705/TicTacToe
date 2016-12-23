@@ -7,11 +7,19 @@ import org.lwjgl.opengl.GL11;
  */
 public final class TicTacToeBoard extends UiComponent
 {
-    private char[][] boardPieces;
+    private char[][] boardCells;
 
     public TicTacToeBoard()
     {
-        this.boardPieces = new char[3][3];
+        this.boardCells = new char[3][3];
+
+        // TODO DEBUG
+        boardCells[0][0] = 'O';
+        boardCells[1][0] = 'O';
+        boardCells[1][2] = 'O';
+        boardCells[1][1] = 'X';
+        boardCells[0][1] = 'X';
+        boardCells[0][1] = 'X';
     }
 
     private void renderGrid(float lineSize)
@@ -37,13 +45,51 @@ public final class TicTacToeBoard extends UiComponent
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
     }
 
-    private void drawPieces()
+    private void drawCells()
     {
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
+                char cell = boardCells[x][y];
 
+                final float sizeXover6 = getSize().getX() / 6.0f;
+                final float sizeYover6 = getSize().getY() / 6.0f;
+
+                final float xpos = x * 2.0f * sizeXover6 + sizeXover6;
+                final float ypos = y * 2.0f * sizeYover6 + sizeYover6;
+
+                if (cell == 'O')
+                {
+                    GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+                    GL11.glVertex2f(xpos, ypos);
+
+                    final double pi2 = Math.PI * 2.0f;
+
+                    for (int i = 0; i <= 16; i++)
+                    {
+                        double radians = i * pi2 / 16;
+
+                        GL11.glVertex2d(xpos + Math.sin(radians) * 40.0f, ypos + Math.cos(radians) * 40.0f);
+                        GL11.glVertex2d(xpos + Math.sin(radians) * 50.0f, ypos + Math.cos(radians) * 50.0f);
+                    }
+
+                    GL11.glEnd();
+                }
+                else if (cell == 'X')
+                {
+                    GL11.glBegin(GL11.GL_QUADS);
+                    GL11.glVertex2f(xpos - 25.0f, ypos - 25.0f);
+                    GL11.glVertex2f(xpos - 15.0f, ypos - 25.0f);
+                    GL11.glVertex2f(xpos + 25.0f, ypos + 25.0f);
+                    GL11.glVertex2f(xpos + 15.0f, ypos + 25.0f);
+
+                    GL11.glVertex2f(xpos + 25.0f, ypos - 25.0f);
+                    GL11.glVertex2f(xpos + 15.0f, ypos - 25.0f);
+                    GL11.glVertex2f(xpos - 25.0f, ypos + 25.0f);
+                    GL11.glVertex2f(xpos - 15.0f, ypos + 25.0f);
+                    GL11.glEnd();
+                }
             }
         }
     }
@@ -52,7 +98,7 @@ public final class TicTacToeBoard extends UiComponent
     public void render()
     {
         renderGrid(10.0f);
-        drawPieces();
+        drawCells();
     }
 
     public boolean hasWon(char piece)
@@ -60,7 +106,7 @@ public final class TicTacToeBoard extends UiComponent
         // Check columns
         for (int i = 0; i < 3; i++)
         {
-            if (boardPieces[i][0] == piece && boardPieces[i][1] == piece && boardPieces[i][2] == piece)
+            if (boardCells[i][0] == piece && boardCells[i][1] == piece && boardCells[i][2] == piece)
             {
                 return true;
             }
@@ -69,7 +115,7 @@ public final class TicTacToeBoard extends UiComponent
         // Check rows
         for (int i = 0; i < 3; i++)
         {
-            if (boardPieces[0][i] == piece && boardPieces[1][i] == piece && boardPieces[2][i] == piece)
+            if (boardCells[0][i] == piece && boardCells[1][i] == piece && boardCells[2][i] == piece)
             {
                 return true;
             }
@@ -78,5 +124,35 @@ public final class TicTacToeBoard extends UiComponent
         // Check diagonals
 
         return false;
+    }
+
+    public int emptyCellsCount()
+    {
+        int count = 0;
+
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (boardCells[x][y] == ' ')
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    @Override
+    public void onMouseButtonUp(float x, float y, int button)
+    {
+        int cellX = (int) (x / size.getX() * 3.0f);
+        int cellY = (int) (y / size.getY() * 3.0f);
+        System.out.println(cellX + ", " + cellY);
+
+        boardCells[cellX][cellY] = 'O';
+
+        // TODO to continue
     }
 }
