@@ -48,15 +48,6 @@ public class Container extends UiComponent
 
             component.render();
             GL11.glPopMatrix();
-
-            GL11.glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-            GL11.glBegin(GL11.GL_LINE_LOOP);
-            GL11.glVertex2f(component.position.getX(), component.position.getY());
-            GL11.glVertex2f(component.position.getX() + component.size.getX(), component.position.getY());
-            GL11.glVertex2f(component.position.getX() + component.size.getX(), component.position.getY() + component.size.getY());
-            GL11.glVertex2f(component.position.getX(), component.position.getY() + component.size.getY());
-            GL11.glEnd();
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
 
