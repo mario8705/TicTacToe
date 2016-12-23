@@ -7,12 +7,14 @@ import fr.alexislavaud.tictactoe.Vector2f;
  */
 public abstract class UiComponent
 {
+    protected boolean receiveInputs;
     protected UiComponent parent;
     protected Vector2f position;
     protected Vector2f size;
 
     public UiComponent()
     {
+        this.receiveInputs = true;
         this.parent = null;
         this.position = new Vector2f();
         this.size = new Vector2f();
@@ -49,6 +51,16 @@ public abstract class UiComponent
 
     public void render()
     {
+    }
+
+    public boolean isReceivingInputs()
+    {
+        return receiveInputs;
+    }
+
+    public void setReceiveInputs(boolean receiveInputs)
+    {
+        this.receiveInputs = receiveInputs;
     }
 
     public void onMouseMove(float x, float y)

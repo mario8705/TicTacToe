@@ -79,7 +79,7 @@ public class Container extends UiComponent
         {
             UiComponent child = childs.get(i);
 
-            if (isMouseInComponent(x, y, child))
+            if (isMouseInComponent(x, y, child) && child.isReceivingInputs())
             {
                 return child;
             }
@@ -95,7 +95,7 @@ public class Container extends UiComponent
         {
             UiComponent component = childs.get(i);
 
-            if (isMouseInComponent(x, y, component))
+            if (isMouseInComponent(x, y, component) && component.isReceivingInputs())
             {
                 component.onMouseMove(x - component.position.getX(), y - component.position.getY());
                 break;
