@@ -11,6 +11,7 @@ public final class MainMenuScreen extends Screen
     private Label gameTitle;
     private Button playButton;
     private Button quitButton;
+    private Label versionLabel;
 
     @Override
     public void update(float tpf)
@@ -25,6 +26,8 @@ public final class MainMenuScreen extends Screen
 
         quitButton.centerX(rootContainer.getSize().getX());
         quitButton.getPosition().setY(rootContainer.getSize().getY() / 2.0f + 10.0f);
+
+        versionLabel.getPosition().set(0.0f, rootContainer.getSize().getY() - versionLabel.getFontSize().getY());
     }
 
     @Override
@@ -33,11 +36,12 @@ public final class MainMenuScreen extends Screen
         this.gameTitle = new Label("TicTacToe", 4.0f);
         this.playButton = new Button("Play!");
         this.quitButton = new Button("Quit");
+        this.versionLabel = new Label("TicTacToe v1.0");
 
         playButton.setButtonCallback(() -> TicTacToe.getInstance().setNextScreen(new SelectModeScreen()));
         quitButton.setButtonCallback(() -> TicTacToe.getInstance().shutdown());
 
-        rootContainer.addChilds(gameTitle, playButton, quitButton);
+        rootContainer.addChilds(gameTitle, playButton, quitButton, versionLabel);
     }
 
     @Override
