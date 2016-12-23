@@ -25,6 +25,11 @@ public abstract class UiComponent
         position.setX((width - size.getX()) / 2.0f);
     }
 
+    public void centerY(float height)
+    {
+        position.setY((height - size.getY()) / 2.0f);
+    }
+
     public Vector2f getPosition()
     {
         return position;
